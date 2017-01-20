@@ -1,0 +1,37 @@
+language: java
+addons:
+  sonarqube: true
+jdk:
+  - oraclejdk8
+before_install:
+  - if [ ! -z "$GPG_SECRET_KEYS" ]; then echo $GPG_SECRET_KEYS | base64 --decode | $GPG_EXECUTABLE --import; fi
+  - if [ ! -z "$GPG_OWNERTRUST" ]; then echo $GPG_OWNERTRUST | base64 --decode | $GPG_EXECUTABLE --import-ownertrust; fi
+install:
+  - mvn clean --settings .travis/settings.xml install -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip -B -V
+script:
+  - mvn org.jacoco:jacoco-maven-plugin:prepare-agent sonar:sonar -Dsonar.login=$SONAR_TOKEN
+deploy:
+  - provider: script
+    script: ".travis/deploy.sh"
+    skip_cleanup: true
+    on:
+      repo: sbtqa/json-parser
+      branch: master
+      jdk: oraclejdk8
+  - provider: script
+    script: ".travis/deploy.sh"
+    skip_cleanup: true
+    on:
+      repo: sbtqa/json-parser
+      tags: true
+      jdk: oraclejdk8
+notifications:
+  email: false
+  slack:
+    rooms:
+      - secure: G3gj3IzlKnDC0FYOiSMNPVPwIo8TDBi1MtQlwnuBDN7B+3esyFYepxLoswS5G2a7xdvSFzb9mJByUNn41lB/Wt30nCb7x94Zn2xDw42/jTZLGixGDWr/2LYghcG6PkcAUOWH/TK2Bsw3nTKZOz4TTfGGw2M5xFyoXnAMIHulwGsu/D5YAYU2zKWrBOHoJTv5fm+qd/0st8ymrdnxaFg0Dsnu5EYfOLiyi1oIB26wCaB5+AtK97z1ungOoLRrTiwU8j+sL7JDBE/MLPthaF4eepyylQl9QwVoNWBfh00L83KW159YMlXU2WDrfrYqwBrpNB10PohIEvt7HsNgffcmSvl2rEzXtIcKDUcGIB+Dr/k209zMi/ZdCWDGLj+yfItjY3scS1CrIsc8Id+YSzCnRn17c5wlbaMmwPULOdXRPrc/tVrCIR0o9tDSCbjDS4H2HvPfLD9TRfYRIyrhIKxcZVxtl8Gq4q66HEKMnvH+mJN5Oe6Dry00M/LZNGpdOsin8if+TqTbAbVzkrR4WV6HMuFszO2SC7O1vajaa9ZEb7ZzK1nbwbHxkDIkeVgOWdlVk+s6LxFh1sn50jfdF7LGtzpfauETeVkdM9iCn71wO9SlwwwSfu8w+2xt7P2zjVEGSBTnul3g4Ey4iaJDEi/IXA7wvWc0SiiFBG7/kJUnEIY=
+    template:
+      - "Build status: %{message}"
+      - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{commit_message}"
+      - "Change view : %{compare_url}"
+      - "Build details : %{build_url}"
