@@ -34,6 +34,8 @@ notifications:
   slack:
     rooms:
       - secure: p47PlTGJHxaIiT0i/PGoBGDfYaqlotK34+JqdKkkA3Oh/UOpEtExnc3TomFVi/CI3ubIk5KcCoTBYAHKhUvZ6sgCsNaZHIFLagy1/IYCy7bBf8tC7snyJJlvqFv3Lwfe/gFssAQdR3Lh3cILMSSNUk6U1Uueyf+SqDFcUXBjbFqotCUet+JUS2qPgoUA7JlYLR6h7GNxe5m97TWhpVeFTetQ94tbzgisOI1JDjpaI/HL9QCv2QLDuViQDtXW3oA6l+LznCV9Hjc+AVXnNNIu2Gdwg6PXrct3TYd0khOEMiCPmnckqWm7ow8i7wgzzks9O2orSJ5JWZ2mXq/CNe3y8G1G0crMBf+jgFFn3y2q1K9rByOGHp2doJZhoFT6CokouYtBYBUiRk+WZOUmvdJc46u1K83KXMlTptk+TkW5qg322N0L5SmOBEjzH9ZY4pWT/4gUuMHzVkV+U8Hw4CpCVAFiENdKA4v3cgeNevJZ4CG39idHemoYQVRNV+Fml4uzA9iaddmwEJYLUCie7W4UWkELL5PpCNGWuk3yVhtD7EDZfhqxjbC04olxxVsLJPyYorOQCWoTlP1UfMIYOLrdpUY3u0jErIiFGeVSgrSCQaRpbYeCwJHRYiOW72ai3AhojaWx/upWx/EtAx1gHhVJuRNNJhkHkEunyvwE58OoxKA=
+    on_success: change
+    on_failure: always
     template:
       - "Build status: %{message}"
       - "%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{commit_message}"
