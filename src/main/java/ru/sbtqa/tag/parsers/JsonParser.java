@@ -10,6 +10,8 @@ import ru.sbtqa.tag.parsers.core.exceptions.ParserException;
 import ru.sbtqa.tag.parsers.core.Parser;
 import ru.sbtqa.tag.parsers.core.ParserCallback;
 import ru.sbtqa.tag.parsers.core.ParserItem;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 /**
  * Json parser
@@ -40,5 +42,9 @@ public class JsonParser implements Parser, ParserCallback {
     @Override
     public <T extends Object> T read(String source, String jpath) throws ParserException {
         return JsonPath.read(source, jpath);
+    }
+    
+    public Object read(String jsonString) throws ParseException {        
+        return new JSONParser().parse(jsonString);
     }
 }
