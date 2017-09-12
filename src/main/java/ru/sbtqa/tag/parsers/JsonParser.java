@@ -24,11 +24,7 @@ public class JsonParser implements Parser, ParserCallback {
         try {
             result = read(item.getSource(), item.getPath());
             if (result instanceof JSONArray) {
-                List<String> list = new ArrayList<>();
-                for (Object object : (JSONArray) result) {
-                    list.add(object.toString());
-                }
-                return list;
+                return ((JSONArray) result).toJSONString();
             }
         } catch (ParserException e) {
             LOG.error("Error to get value by path {} in source {}", item.getPath(), item.getSource(), e);
