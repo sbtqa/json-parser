@@ -1,9 +1,13 @@
 package ru.sbtqa.tag.parsers;
 
 import com.jayway.jsonpath.JsonPath;
+
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+
 import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.sbtqa.tag.parsers.core.exceptions.ParserException;
@@ -24,7 +28,11 @@ public class JsonParser implements Parser, ParserCallback {
         try {
             result = read(item.getSource(), item.getPath());
             if (result instanceof JSONArray) {
-                return ((JSONArray) result).toJSONString();
+                List<String> list = new ArrayList<>();
+                for (Object object : (JSONArray) result) {
+                    list.add(JSONObject.toJSONString((Map<String, ? extends Object>) object));
+                }
+                return list;
             }
         } catch (ParserException e) {
             LOG.error("Error to get value by path {} in source {}", item.getPath(), item.getSource(), e);
