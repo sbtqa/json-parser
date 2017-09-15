@@ -3,7 +3,9 @@ package ru.sbtqa.tag.parsers;
 import com.jayway.jsonpath.JsonPath;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import net.minidev.json.JSONArray;
+import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ru.sbtqa.tag.parsers.core.exceptions.ParserException;
@@ -26,7 +28,7 @@ public class JsonParser implements Parser, ParserCallback {
             if (result instanceof JSONArray) {
                 List<String> list = new ArrayList<>();
                 for (Object object : (JSONArray) result) {
-                    list.add(object.toString());
+                    list.add(JSONObject.toJSONString((Map<String, ? extends Object>) object));
                 }
                 return list;
             }
