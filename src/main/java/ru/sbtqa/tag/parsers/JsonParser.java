@@ -27,7 +27,7 @@ public class JsonParser implements Parser, ParserCallback {
         try {
             result = read(item.getSource(), item.getPath());
             if (Props.get("jsonparser.toJSONString") != null
-                    && Boolean.valueOf(Props.get("jsonparser.toJSONString")) == true) {
+                    && Boolean.valueOf(Props.get("jsonparser.toJSONString"))) {
                 if (result instanceof JSONArray) {
                     return ((JSONArray) result).toJSONString();
                 }
