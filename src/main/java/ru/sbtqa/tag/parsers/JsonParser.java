@@ -12,6 +12,7 @@ import ru.sbtqa.tag.parsers.core.exceptions.ParserException;
 import ru.sbtqa.tag.parsers.core.Parser;
 import ru.sbtqa.tag.parsers.core.ParserCallback;
 import ru.sbtqa.tag.parsers.core.ParserItem;
+import ru.sbtqa.tag.qautils.properties.Props;
 
 /**
  * Json parser
@@ -25,6 +26,15 @@ public class JsonParser implements Parser, ParserCallback {
         Object result = "";
         try {
             result = read(item.getSource(), item.getPath());
+            if (Props.get("jsonparser.toJSONString") != null
+                    && Boolean.valueOf(Props.get("jsonparser.toJSONString")) == true) {
+                if (result instanceof JSONArray) {
+                    return ((JSONArray) result).toJSONString();
+                }
+                if (result instanceof JSONObject) {
+                    return ((JSONObject) result).toJSONString();
+                }
+            }
             if (result instanceof JSONArray) {
                 List<String> list = new ArrayList<>();
                 for (Object object : (JSONArray) result) {

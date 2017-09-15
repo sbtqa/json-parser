@@ -61,6 +61,12 @@
       <version>2.2.0</version>
       <type>jar</type>
     </dependency>
+    <dependency>
+      <groupId>ru.sbtqa.tag</groupId>
+      <artifactId>qa-utils</artifactId>
+      <version>1.2.6</version>
+      <type>jar</type>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
