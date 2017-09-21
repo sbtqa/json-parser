@@ -2,6 +2,7 @@ package ru.sbtqa.tag.parsers;
 
 import com.jayway.jsonpath.JsonPath;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import net.minidev.json.JSONArray;
@@ -33,6 +34,9 @@ public class JsonParser implements Parser, ParserCallback {
                 }
                 if (result instanceof JSONObject) {
                     return ((JSONObject) result).toJSONString();
+                }
+                if (result instanceof LinkedHashMap) {
+                    return new JSONObject((LinkedHashMap) result).toJSONString();
                 }
             }
             if (result instanceof JSONArray) {
