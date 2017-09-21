@@ -35,8 +35,8 @@ public class JsonParser implements Parser, ParserCallback {
                 if (result instanceof JSONObject) {
                     return ((JSONObject) result).toJSONString();
                 }
-                if(result instanceof LinkedHashMap){
-                    return new JSONObject((LinkedHashMap)result).toJSONString();
+                if (result instanceof LinkedHashMap) {
+                    return new JSONObject((LinkedHashMap) result).toJSONString();
                 }
             }
             if (result instanceof JSONArray) {
